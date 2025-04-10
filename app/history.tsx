@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, FlatList, StyleSheet } from 'react-native';
+import { View, Text, FlatList, SafeAreaView, StyleSheet } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function HistoryScreen() {
@@ -14,19 +14,38 @@ export default function HistoryScreen() {
   }, []);
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Calculation History:</Text>
-      <FlatList
-        data={history}
-        renderItem={({ item }) => <Text style={styles.item}>{item}</Text>}
-        keyExtractor={(item, index) => index.toString()}
-      />
-    </View>
+    <SafeAreaView style={styles.safeContainer}>
+      <View style={styles.container}>
+        <Text style={styles.title}>Calculation History:</Text>
+        <FlatList
+          data={history}
+          renderItem={({ item }) => <Text style={styles.item}>{item}</Text>}
+          keyExtractor={(item, index) => index.toString()}
+          contentContainerStyle={{ alignItems: 'center' }}
+        />
+      </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { padding: 20 },
-  title: { fontSize: 18, marginBottom: 10 },
-  item: { fontSize: 16, marginBottom: 5 },
+  safeContainer: {
+    flex: 1,
+    backgroundColor: '#f9f9f9',
+  },
+  container: {
+    flexGrow: 1,
+    justifyContent: 'center',
+    padding: 20,
+  },
+  title: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 15,
+    textAlign: 'center',
+  },
+  item: {
+    fontSize: 16,
+    marginVertical: 4,
+  },
 });
